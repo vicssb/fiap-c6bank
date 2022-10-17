@@ -1,7 +1,98 @@
-import React from 'react'
+
+import React, {useState, useEffect, FormEvent} from 'react'
+import { Typography, Container, CssBaseline,Box,TextField,
+     Checkbox, Button, FormControlLabel} from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Snackbar from '../components/utils/Snackbar';
+import Copyright from '../components/utils/Copyright';
+
+
+
+const theme = createTheme();
 
 export default function RegisterPage() {
+
+
+const [empresa, setEmpresa] = useState<string>('');
+const [nome, setNome] = useState('');
+const [contador, setContador] = useState<number>(5);
+const [error, setError] = useState<boolean>(false);
+const [errorMessage, setErrorMessage] = useState<string>('');
+const [email, setEmail] = useState<string | undefined | null | FormDataEntryValue>('');
+const [password, setPassword] = useState<string | undefined | null | FormDataEntryValue>('');
+const [open, setOpen] = useState<boolean>(false);
+
+// A primeira vez após carregar a página e após o render
+// Executa também a cada alteração de estado
+useEffect(()=>{
+    if(contador ==0){
+        document.title = `Executando useEffect a primeira vez ${contador}`;
+    }else{
+        document.title = `Executando useEffect a cada alteração ${contador}`;
+    }
+   // setContador(contador + 1);
+    console.log(`Executando useEffect a cada chamada ${contador}`);
+},[contador]);
+
+
+useEffect(()=>{
+
+    if(password && password.length < 6){
+        setError(true);
+        setErrorMessage('A senha deve ter no mínimo 6 caracteres');
+    }else if(password) {
+        setError(false);
+        setErrorMessage('');
+        //enviar o formulário para o servidor........
+        //deu certo... vamos criar o snackbar...
+        setOpen(true);
+    }
+
+},[password]);
+
+const handleSubmit = (event: FormEvent<HTMLFormElement>)=>{
+    // Previne o comportamento padrão do formulário, que seria recarregar a página.
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+
+    setEmail(data.get('email'));
+    setPassword(data.get('password'));
+}
+
   return (
-    <div>register</div>
+    <ThemeProvider theme={theme}>
+        <Container component="main" maxWidth="xs">
+            <CssBaseline />
+                
+                <Snackbar open={false} hide={5} message='Usuário autenticado com sucesso... aguarde...'/>
+
+
+             <Box sx={{mt:8, display: 'flex',flexDirection: 'column', alignItems: 'center'}}>
+                <Typography component="h1" variant="h5">
+                    Cadastro
+                </Typography>
+                <Box component="form" onSubmit={handleSubmit}>
+                    {/* <button onClick={()=>setContador(contador+1)}>Muda o contador</button>
+                    <button onClick={()=>setNome(nome.toUpperCase())}>Muda o Nome</button> */}
+                 {/*'O State contador vale: ' + contador*/ }
+
+
+    <TextField margin="normal" required  fullWidth id="nome" label="Digite o seu nome" name="nome" autoComplete="nome" autoFocus/>
+    <TextField margin="normal" required  fullWidth id="email" label="Digite o e-mail" name="email" autoComplete="email" autoFocus/>
+    <TextField margin="normal"  required fullWidth id="password" type="password" label="Digite a senha" name="password" autoComplete="current-password" autoFocus/>
+    <TextField margin="normal" required  fullWidth id="confirme" type="password" label="Confirme sua senha" name="confirme" autoComplete="confirme" autoFocus/>
+                    
+                    <Button type="submit" fullWidth variant="contained" sx={{mt:3, mb:2}}>Cadastrar</Button>
+
+                    {error && <Typography color="error">{errorMessage}</Typography>}
+
+                </Box>
+             </Box>
+            <Copyright site="www.avanade.com.br" sx={{mt:8, mb: 4}} />
+
+                    {open && <Snackbar open={open} hide={6} message='Usuário cadastrado com sucesso... Aguarde...' />}
+
+        </Container>
+    </ThemeProvider>
   )
 }
