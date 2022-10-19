@@ -3,6 +3,10 @@ import styled from '@emotion/styled';
 import Profile from '../Profile';
 import Balance from '../Balance';
 import Menu from '../Menu';
+import ExtractContent from '../ExtractContent';
+import ExtractHeader from '../ExtractHeader';
+import ExtractTotal from '../ExtractTotal';
+import ExtractData from '../ExtractData';
 
 const SideBarContainer = styled.div`
     display: flex;
@@ -17,6 +21,8 @@ export default function SideBar() {
         <Profile name="Victor S S Barros" role="Software Engineer" agency="0001" accountNumber="123456789" />
         <Balance amount={190000} />
         <Menu />
+
+        
     </SideBarContainer>
   )
 }

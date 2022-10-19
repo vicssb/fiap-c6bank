@@ -22,7 +22,7 @@ type BalanceProps = {
 }
 export default function Balance(props:BalanceProps) {
 
-    const [show, setShow] = useState<boolean>(true);
+    const [show, setShow] = useState<boolean>(false);
 
   return (
     <BalanceContainer>
