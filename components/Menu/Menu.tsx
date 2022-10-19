@@ -8,6 +8,15 @@ const MenuContainer = styled.nav`
     width:100%;
     background: #242424;
     color: #f8f8f8;
+    height: 300px;
+    overflow-y: auto;
+    &::-webkit-scrollbar-thumb{
+        background-color: #242424;
+        outline: 1px solid #7777;
+    }
+    &::-webkit-scrollbar{
+        width: 6px;
+    }
     ul {
         width: 100%;
         margin: 0;

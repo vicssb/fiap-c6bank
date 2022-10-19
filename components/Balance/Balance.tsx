@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import Link from 'next/link';
 
@@ -12,7 +12,7 @@ const BalanceContainer = styled.div`
     padding-left: 30px;
     padding-bottom: 30px;
     & > div > strong{
-        font-size: 1.8rem;
+        font-size: 1.3rem;
         margin-right: 10%;
     }
 `;
@@ -21,18 +21,25 @@ type BalanceProps = {
     amount: number;
 }
 export default function Balance(props:BalanceProps) {
+
+    const [show, setShow] = useState<boolean>(true);
+
   return (
     <BalanceContainer>
         <p>Saldo</p>
         <div>
+
+            {show?
             <strong>
     {new Intl.NumberFormat('pt-br',{style:'currency', currency:'BRL'} ).format(props.amount)}
             </strong>
-            <Link href="#">
-                <a>
-                MOSTRAR
-                </a>
-            </Link>
+            :
+            <strong>R$ *****,**</strong>
+            }
+
+            <button onClick={() => setShow(!show)}>{show? 'Ocultar' : 'Mostar'}</button>
+
+            
         </div>
     </BalanceContainer>
   )

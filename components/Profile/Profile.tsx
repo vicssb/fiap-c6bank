@@ -8,11 +8,15 @@ const ProfileContainer = styled.div`
     align-items: center;
     justify-content: center;
     width: 100%;
-    height: 400px;
+    padding-bottom: 20px;
     background-color: #242424;
     color: #f8f8f8;
     h2, h3 {
         margin:0;
+        font-weight: 500;
+    }
+    h2{
+        margin-top: 10%;
     }
 `
 const Account = styled.div`
